@@ -31,7 +31,7 @@ public class PSearch implements Callable<Integer> {
 		}
 	}
 
-    return Integer.valueOf(-1);
+    	return Integer.valueOf(-1);
   }
 
   public static int parallelSearch(int x, int[] A, int n) {
@@ -50,8 +50,8 @@ public class PSearch implements Callable<Integer> {
 		last = 1;
 	} else{
 		numP = n;
-		size = (A.length/n);
-		last = (A.length)%n;
+		size = (A.length/n); 
+		last = size+(A.length%n);
 	}
 
 	//Thread Pool Submission
@@ -75,18 +75,17 @@ public class PSearch implements Callable<Integer> {
 			}
 		}
 	} catch (InterruptedException e) {
-        e.printStackTrace();
+        	e.printStackTrace();
 	} catch (ExecutionException e) {
-        e.printStackTrace();
+        	e.printStackTrace();
 	}
-
+    tp.shutdown();
     return -1; // return -1 if the target is not found
   }
-
 	public static void main(String[] args){
 		int[] A = {4,6,2,3,7,10,11,5,20,21};
-		int result = parallelSearch(4,A,2);
-		System.out.println("Result: " + result);
+		int result = parallelSearch(21,A,34);
+		System.out.println("Index of search: " + result);
 	}
 
 }
