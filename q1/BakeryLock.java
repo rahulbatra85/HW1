@@ -5,8 +5,8 @@
 public class BakeryLock implements MyLock {
     
     int numThread;
-    boolean[] choosing;
-    int[] queue_num;
+    volatile boolean[] choosing;
+    volatile int[] queue_num;
 
     //init lock
     public BakeryLock(int numThread) {
@@ -37,7 +37,7 @@ public class BakeryLock implements MyLock {
         choosing[myId] = false;
 
     
-        //wait for queue_num to be next (smallest from others)
+        //in queue -- wait for queue_num to be next (smallest from others)
         for (int j=0; j<numThread; j++) {
             while (choosing[j]); // wait for thread j to get queue_num
             while ( (queue_num[j]  != 0) && //thread j is done

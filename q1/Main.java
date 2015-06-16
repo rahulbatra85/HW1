@@ -41,22 +41,21 @@ public class Main {
         // Each thread executes numTotalInc/numThread increments
         // Please calculate the total execute time in millisecond and store the
         // result in executeTimeMS
-		OurThread[] p = new OurThread[numThread];
-		Thread[] t = new Thread[numThread];
-        
+		Thread[] t = new Thread[numThread];        
         long start = System.nanoTime(); 
         
-        for(int i=0; i<numThread; i++){		
-            p[i] = new OurThread(counter, numTotalInc/numThread);
-            t[i] = new Thread(p[i]);
+        //Create Threads
+        for(int i=0; i<numThread; i++)	
+            t[i] = new Thread(new OurThread(counter, numTotalInc/numThread, i));
+        
+        //Start threads
+        for(int i=0; i<numThread; i++) 
             t[i].start();
-        }
 	
-		//Get and aggregate results
+		//Aggregate threads
         try{ 
-            for(int i=0; i<numThread; i++){		
+            for(int i=0; i<numThread; i++)
                 t[i].join();
-            }
         } 
         catch (InterruptedException e) {
             e.printStackTrace();
@@ -69,7 +68,7 @@ public class Main {
         // Checking if the result is correct
         if (counter == null ||
             counter.getCount() != (numTotalInc/numThread) * numThread) {
-          System.err.println("Error: The counter is not equal to the number "
+            System.err.println("Error: The counter is not equal to the number "
               + "of total increment");
         } else {
           // print total execute time if the result is correct
