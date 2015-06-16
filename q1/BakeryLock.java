@@ -4,7 +4,7 @@
 
 public class BakeryLock implements MyLock {
     
-    int numThread;
+    volatile int numThread;
     volatile boolean[] choosing;
     volatile int[] queue_num;
 
@@ -18,7 +18,7 @@ public class BakeryLock implements MyLock {
         //init choosing[] to all false and queue_num[] to all 0s
         for (int j=0; j<numThread; j++) {
             choosing[j] = false;
-            queue_num[j]=0;
+            queue_num[j] = 0;
         }
     }
 
