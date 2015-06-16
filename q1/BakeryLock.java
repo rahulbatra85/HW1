@@ -1,55 +1,40 @@
-// TODO
-// Implement the bakery algorithm
-// Remember to use volatile qualifier for shared variables to guarantee atomicity
-
 public class BakeryLock implements MyLock {
+    volatile int N;
+    volatile boolean[] choosing; // inside doorway
+    volatile int[] number;
     
-    volatile int numThread;
-    volatile boolean[] choosing;
-    volatile int[] queue_num;
-
-    //init lock
-    public BakeryLock(int numThread) {
-    
-        this.numThread = numThread;
-        choosing = new boolean[numThread];
-        queue_num = new int[numThread];
-        
-        //init choosing[] to all false and queue_num[] to all 0s
-        for (int j=0; j<numThread; j++) {
+    public BakeryLock(int numProc) {
+        N = numProc;
+        choosing = new boolean[N];
+        number = new int[N];
+        for (int j = 0; j < N; j++) {
             choosing[j] = false;
-            queue_num[j] = 0;
+            number[j] = 0;
         }
     }
-
+    
     @Override
-    public void lock(int myId) {
-    
-        //doorway -- grab queue_num (+1 from highest)
-        choosing[myId] = true;
-        
-        for (int j=0; j<numThread; j++) {
-            if (queue_num[j] > queue_num[myId]) 
-                queue_num[myId] = queue_num[j];            
-        }  
-              
-        queue_num[myId]++;     
-        choosing[myId] = false;
+    public void lock(int i) {
+        // step 1: doorway: choose a number
+        choosing[i] = true;
+        for (int j = 0; j < N; j++)
+            if (number[j] > number[i])
+                number[i] = number[j];
+        number[i]++;
+        choosing[i] = false;
 
-    
-        //in queue -- wait for queue_num to be next (smallest from others)
-        for (int j=0; j<numThread; j++) {
-            while (choosing[j]); // wait for thread j to get queue_num
-            while ( (queue_num[j]  != 0) && //thread j is done
-                     ( (queue_num[j] < queue_num[myId]) || //thread j has a smaller queue_num
-                        (queue_num[j] == queue_num[myId]) && (j<myId) //thread j has same queue_num (wtf) but got here 1st
-                      )
-                   ); //wait for other threads to finish    
-        }  
+        // step 2: check if my number is the smallest
+        for (int j = 0; j < N; j++) {
+            while (choosing[j]) ; // process j in doorway
+            while ((number[j] != 0) &&
+                    ((number[j] < number[i]) ||
+                    ((number[j] == number[i]) && j < i)))
+                ; // busy wait
+        }
     }
-
+    
     @Override
-    public void unlock(int myId) {
-        queue_num[myId] = 0; //done
+    public void unlock(int i) { // exit protocol
+        number[i] = 0;
     }
 }
