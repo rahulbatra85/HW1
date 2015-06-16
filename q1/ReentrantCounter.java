@@ -11,7 +11,8 @@ public class ReentrantCounter extends Counter {
         try {
           // ... method body
         	count++;
-        } finally {
+        } 
+        finally {
           lock.unlock();
         }
     }
