@@ -43,6 +43,9 @@ public class Main {
         // result in executeTimeMS
 		OurThread[] p = new OurThread[numThread];
 		Thread[] t = new Thread[numThread];
+        
+        long start = System.nanoTime(); 
+        
 		for(int i=0; i<numThread; i++){		
 			p[i] = new OurThread(counter,numTotalInc/numThread);
 			t[i] = new Thread(p[i]);
@@ -50,14 +53,17 @@ public class Main {
 		}
 	
 		//Get and aggregate results
-		try{
+		try{ 
 			for(int i=0; i<numThread; i++){		
 				t[i].join();
-			}
+		    }
 		} catch (InterruptedException e) {
     	    e.printStackTrace();
 		}
- 
+        
+        long end = System.nanoTime(); 
+        double executeTimeMS = (end - start)/1e6; 
+        
         // all threads finish incrementing
         // Checking if the result is correct
         if (counter == null ||
