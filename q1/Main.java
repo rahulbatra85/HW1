@@ -62,7 +62,7 @@ public class Main {
 		}
         
         long end = System.nanoTime(); 
-        double executeTimeMS = (end - start)/1e6; 
+        executeTimeMS = (end - start)/1000000; 
         
         // all threads finish incrementing
         // Checking if the result is correct
