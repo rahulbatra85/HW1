@@ -1,6 +1,6 @@
 import java.util.concurrent.*;
 
-public class OurThread implements Runnable {
+public class OurThread extends Thread {
 
 	Counter c;
 	int numInc;
@@ -18,7 +18,7 @@ public class OurThread implements Runnable {
             c.increment();
 	}
     
-    public int stupid_ID() {
+    public int get_our_id() {
         return myId;
     }
 }	

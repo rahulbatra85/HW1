@@ -41,12 +41,12 @@ public class Main {
         // Each thread executes numTotalInc/numThread increments
         // Please calculate the total execute time in millisecond and store the
         // result in executeTimeMS
-		Thread[] t = new Thread[numThread];        
+		OurThread[] t = new OurThread[numThread];        
         long start = System.nanoTime(); 
         
         //Create Threads
         for(int i=0; i<numThread; i++)	
-            t[i] = new Thread(new OurThread(counter, numTotalInc/numThread, i));
+            t[i] = new OurThread(counter, numTotalInc/numThread, i);
         
         //Start threads
         for(int i=0; i<numThread; i++) 
