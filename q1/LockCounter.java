@@ -14,7 +14,8 @@ public class LockCounter extends Counter {
     @Override
     public void increment() {  
         //lock using LockCounter
-        lock.lock(myId);
+        int id = (int) (Thread.currentThread().getId());  
+        lock.lock(id);
         
         try {
             // ... method body
@@ -22,7 +23,7 @@ public class LockCounter extends Counter {
         } 
         finally {
             //lock LockCounter
-            lock.unlock(myId);
+            lock.unlock(id);
         }        
     }
 }

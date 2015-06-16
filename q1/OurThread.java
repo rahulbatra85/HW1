@@ -17,5 +17,8 @@ public class OurThread implements Runnable {
         for(int i=0; i<numInc; i++)	
             c.increment();
 	}
+    
+    public int stupid_ID() {
+        return myId;
+    }
 }	
-
