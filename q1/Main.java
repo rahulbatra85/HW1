@@ -46,23 +46,24 @@ public class Main {
         
         long start = System.nanoTime(); 
         
-		for(int i=0; i<numThread; i++){		
-			p[i] = new OurThread(counter,numTotalInc/numThread);
-			t[i] = new Thread(p[i]);
-			t[i].start();
-		}
+        for(int i=0; i<numThread; i++){		
+            p[i] = new OurThread(counter, numTotalInc/numThread);
+            t[i] = new Thread(p[i]);
+            t[i].start();
+        }
 	
 		//Get and aggregate results
-		try{ 
-			for(int i=0; i<numThread; i++){		
-				t[i].join();
-		    }
-		} catch (InterruptedException e) {
-    	    e.printStackTrace();
-		}
+        try{ 
+            for(int i=0; i<numThread; i++){		
+                t[i].join();
+            }
+        } 
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         
         long end = System.nanoTime(); 
-        executeTimeMS = (end - start)/1000000; 
+        executeTimeMS = (end - start)/1000000; //1ms = 1000000ns
         
         // all threads finish incrementing
         // Checking if the result is correct
