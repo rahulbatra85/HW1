@@ -12,7 +12,7 @@ public class LockCounter extends Counter {
     @Override
     public void increment() {  
         //lock using LockCounter
-        lock.lock();
+        lock.lock(myId);
         
         try {
             // ... method body
@@ -20,7 +20,7 @@ public class LockCounter extends Counter {
         } 
         finally {
             //lock LockCounter
-            lock.unlock();
+            lock.unlock(myId);
         }        
     }
 }

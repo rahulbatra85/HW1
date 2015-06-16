@@ -3,6 +3,7 @@
 // Remember to use volatile qualifier for shared variables to guarantee atomicity
 
 public class FastMutexLock implements MyLock {
+
     public FastMutexLock(int numThread) {
       // TODO: initialize your algorithm
     }
