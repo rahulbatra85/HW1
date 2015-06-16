@@ -1,6 +1,6 @@
 import java.util.concurrent.*;
 
-public class OurThread implements Callable<Integer> {
+public class OurThread implements Runnable {
 	Counter c;
 	int numInc;
 
@@ -10,7 +10,7 @@ public class OurThread implements Callable<Integer> {
 		this.numInc = numInc;
 	}
 
-	public Integer call() throws Exception {
+	public void run() {
 		for(int i=0; i<numInc; i++){
 			c.increment();
 		}

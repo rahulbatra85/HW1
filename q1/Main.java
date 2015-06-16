@@ -1,3 +1,5 @@
+import java.util.concurrent.*;
+
 public class Main {
     public static void main (String[] args) {
         Counter counter = null;
@@ -39,15 +41,23 @@ public class Main {
         // Each thread executes numTotalInc/numThread increments
         // Please calculate the total execute time in millisecond and store the
         // result in executeTimeMS
-		List<Future<Integer>> f = new ArrayList<Future<Integer>>();
-		ExecutorService tp = Executors.newFixedThreadPool(n);
+		OurThread[] p = new OurThread[numThread];
+		Thread[] t = new Thread[numThread];
 		for(int i=0; i<numThread; i++){		
 			p[i] = new OurThread(counter,numTotalInc/numThread);
-			f.add(tp.submit(p[i]));	
+			t[i] = new Thread(p[i]);
+			t[i].start();
 		}
 	
-		
-
+		//Get and aggregate results
+		try{
+			for(int i=0; i<numThread; i++){		
+				t[i].join();
+			}
+		} catch (InterruptedException e) {
+    	    e.printStackTrace();
+		}
+ 
         // all threads finish incrementing
         // Checking if the result is correct
         if (counter == null ||
@@ -59,6 +69,4 @@ public class Main {
           System.out.println(executeTimeMS);
         }
     }
-
-
 }
