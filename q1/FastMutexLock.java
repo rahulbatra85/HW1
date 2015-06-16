@@ -40,7 +40,7 @@ public class FastMutexLock implements MyLock {
                     flag[myId] = false;
                     
                     for (int j=0; j<numThread; j++) 
-                        while (!flag[j]); // wait until flag[j]:=false
+                        while (flag[j]); // wait until flag[j]:=false
                      
                     if (Y==myId) 
                         return; // slow path, exit to CS
