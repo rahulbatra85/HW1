@@ -4,9 +4,9 @@
 
 public class FastMutexLock implements MyLock {
 
-    volatile int X,Y;
-    volatile boolean[] flag;
-    volatile int numThread;
+    private volatile int X,Y;
+    private volatile boolean[] flag;
+    private volatile int numThread;
 
 
     public FastMutexLock(int numThread) {

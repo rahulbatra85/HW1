@@ -2,15 +2,15 @@ import java.util.concurrent.*;
 
 public class OurThread extends Thread {
 
-	Counter c;
-	int numInc;
-    int myId;
+	private volatile Counter c;
+	private int numInc;
+    private int myId;
          
 	//Constructor
-	OurThread(Counter c, int numInc, int i){
+	public OurThread(Counter c, int numInc, int i){
 		this.c = c;
 		this.numInc = numInc;
-        myId = i;
+        this.myId = i;
 	}
     
 	public void run() {

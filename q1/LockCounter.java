@@ -4,10 +4,9 @@
 
 public class LockCounter extends Counter {
 
-    MyLock lock;
+    private final MyLock lock;
     
     public LockCounter(MyLock lock) {
-        super();
         this.lock = lock;
     }
 
@@ -21,7 +20,7 @@ public class LockCounter extends Counter {
         
         try {
             // ... method body
-            super.count++;
+            count++;
         } 
         finally {
             //lock LockCounter
