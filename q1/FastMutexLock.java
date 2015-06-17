@@ -13,9 +13,9 @@ public class FastMutexLock implements MyLock {
     // TODO: initialize your algorithm      
       
         this.numThread = numThread;
-        this.flag = new boolean[numThread];
-        this.X = -1;
-        this.Y = -1;      
+        flag = new boolean[numThread];
+        X = -1;
+        Y = -1;      
         
     }
 

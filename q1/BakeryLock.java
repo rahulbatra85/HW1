@@ -33,18 +33,11 @@ public class BakeryLock implements MyLock {
 
         // step 2: check if my number is the smallest
         for (int j = 0; j < N; j++) {
-<<<<<<< HEAD
-            while (choosing[j]) ; // process j in doorway
-            while ( number[j] != 0  &&
-                    ( number[j] < number[i]  ||
-                    ( number[j] == number[i] && j < i )))
-=======
             //while (choosing[j]) ; // process j in doorway
             while (choosing.get(j) == 1) ; // process j in doorway
             while ((number.get(j) != 0) &&
 //                    ((number[j] < number[tid]) || ((number[j] == number[tid]) && j < tid)))
                     ((number.get(j) < number.get(tid)) || ((number.get(j) == number.get(tid)) && j < tid)))
->>>>>>> 5ecfe1e0969e50fc126785bb875fd207cd2161ca
                 ; // busy wait
         }
     }
