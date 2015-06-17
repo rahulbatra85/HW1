@@ -22,7 +22,7 @@ public class Main {
             lock = new FastMutexLock(numThread);
             counter = new LockCounter(lock);
         } else if (args[0].equals("bakery")) {
-            lock = new BakeryLock(numThread);
+            lock = new BakeryLock2(numThread);
             counter = new LockCounter(lock);
         } else if (args[0].equals("synchronized")) {
             counter = new SynchronizedCounter();
@@ -63,6 +63,7 @@ public class Main {
         
         long end = System.nanoTime(); 
         executeTimeMS = (end - start)/1000000; //1ms = 1000000ns
+
         
         // all threads finish incrementing
         // Checking if the result is correct
@@ -70,7 +71,7 @@ public class Main {
             counter.getCount() != (numTotalInc/numThread) * numThread) {
             System.err.println("Error: The counter is not equal to the number "
               + "of total increment");
-            System.err.println("result, expected:\t" + counter.getCount() + " " + (numTotalInc/numThread) * numThread);            
+            System.err.println("result, expected:\t" + counter.getCount() + "," + (numTotalInc/numThread) * numThread);            
         } else {
           // print total execute time if the result is correct
           System.out.println(executeTimeMS);

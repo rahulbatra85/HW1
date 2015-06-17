@@ -1,16 +1,16 @@
 import java.util.concurrent.*;
 
-public class OurThread extends Thread {
+public final class OurThread extends Thread {
 
-	Counter c;
-	int numInc;
-    int myId;
+    private final Counter c;
+	private final int numInc;
+    private final int myId;  
          
 	//Constructor
-	OurThread(Counter c, int numInc, int i){
+	public OurThread(Counter c, int numInc, int i){
 		this.c = c;
 		this.numInc = numInc;
-        myId = i;
+        this.myId = i;
 	}
     
 	public void run() {

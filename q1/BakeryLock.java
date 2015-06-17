@@ -26,9 +26,9 @@ public class BakeryLock implements MyLock {
         // step 2: check if my number is the smallest
         for (int j = 0; j < N; j++) {
             while (choosing[j]) ; // process j in doorway
-            while ((number[j] != 0) &&
-                    ((number[j] < number[i]) ||
-                    ((number[j] == number[i]) && j < i)))
+            while ( number[j] != 0  &&
+                    ( number[j] < number[i]  ||
+                    ( number[j] == number[i] && j < i )))
                 ; // busy wait
         }
     }

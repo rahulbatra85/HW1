@@ -4,28 +4,27 @@
 
 public class LockCounter extends Counter {
 
-    MyLock lock;
+    private volatile MyLock lock;
     
     public LockCounter(MyLock lock) {
-        super();
         this.lock = lock;
     }
 
     @Override
     public void increment() {  
-        //lock using LockCounter
+    
         OurThread t = (OurThread) Thread.currentThread();
-        int id = t.get_our_id();  
-        
+        final int id = t.get_our_id();
+          
+        //lock using LockCounter        
         lock.lock(id);
         
         try {
-            // ... method body
-            super.count++;
-        } 
+            ++count;
+        }
         finally {
-            //lock LockCounter
+            //unlock LockCounter
             lock.unlock(id);
-        }        
+        }
     }
 }
