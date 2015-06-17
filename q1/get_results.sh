@@ -16,7 +16,7 @@ do
     echo $a >> $out
     for n in `seq 6`
     do 
-        t=`java Main bakery $n $m`
+        t=`java Main $a $n $m`
         echo $n' '$t >> $out
     done
     echo >> $out
