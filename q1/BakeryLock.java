@@ -2,7 +2,7 @@ import java.util.concurrent.atomic.*;
 
 public class BakeryLock implements MyLock {
     private volatile int N;
-	private AtomicIntegerArray number,choosing;
+    private AtomicIntegerArray number,choosing;
     
     public BakeryLock(int numProc) {
         N = numProc;
@@ -21,11 +21,11 @@ public class BakeryLock implements MyLock {
 		int max = 0;
         for (int j = 0; j < N; j++){
             if (number.get(j) > max){
-                max = number.get(j);
-			}
-		}
+        	max = number.get(j);
+	    }
+	}
         number.set(myId, max + 1);
-		choosing.set(myId,0); // choosing[myId] = false;
+	choosing.set(myId,0); // choosing[myId] = false;
 
         // step 2: check if my number is the smallest
         for (int j = 0; j < N; j++) {
@@ -40,7 +40,7 @@ public class BakeryLock implements MyLock {
     }
     
     @Override
-    public void unlock(int i) { // exit protocol
-        number.set(i,0);
+    public void unlock(int myId) { // exit protocol
+        number.set(myId,0);
     }
 }
