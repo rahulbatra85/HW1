@@ -52,6 +52,6 @@ public class BakeryLock implements MyLock {
 
     @Override
     public void unlock(int myId) {
-        queue_num[myId] = 0; //done
+        queue_num.set(myId) = 0; //done
     }
 }
