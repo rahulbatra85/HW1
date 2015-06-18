@@ -1,11 +1,8 @@
-import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.*;
 
 public class BakeryLock implements MyLock {
-    volatile int N;
-//    volatile boolean[] choosing; // inside doorway
-//    volatile int[] number;
-	AtomicIntegerArray number,choosing;
+    private volatile int N;
+	private AtomicIntegerArray number,choosing;
     
     public BakeryLock(int numProc) {
         N = numProc;
@@ -18,26 +15,26 @@ public class BakeryLock implements MyLock {
     }
     
     @Override
-    public void lock(int tid) {
+    public void lock(int myId) {
         // step 1: doorway: choose a number
-//        choosing[tid] = true;
-        choosing.set(tid,1);
+        choosing.set(myId,1); // choosing[myId] = true;
 		int max = 0;
         for (int j = 0; j < N; j++){
             if (number.get(j) > max){
                 max = number.get(j);
 			}
 		}
-        number.set(tid, max + 1);
-		choosing.set(tid,0);
+        number.set(myId, max + 1);
+		choosing.set(myId,0); // choosing[myId] = false;
 
         // step 2: check if my number is the smallest
         for (int j = 0; j < N; j++) {
-            //while (choosing[j]) ; // process j in doorway
             while (choosing.get(j) == 1) ; // process j in doorway
             while ((number.get(j) != 0) &&
-//                    ((number[j] < number[tid]) || ((number[j] == number[tid]) && j < tid)))
-                    ((number.get(j) < number.get(tid)) || ((number.get(j) == number.get(tid)) && j < tid)))
+                   ((number.get(j) < number.get(myId)) || 
+                    ((number.get(j) == number.get(myId)) && j < myId)
+                   )
+                  )
                 ; // busy wait
         }
     }

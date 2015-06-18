@@ -37,7 +37,6 @@ public class BakeryLock implements MyLock {
         queue_num.incrementAndGet(myId); 
         choosing[myId] = false;  
 
-    
         //in queue -- wait for queue_num to be next (smallest from others)
         for (int j=0; j<numThread; j++) {
             while (choosing[j]); // wait for thread j to get queue_num
