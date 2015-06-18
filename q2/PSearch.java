@@ -83,9 +83,34 @@ public class PSearch implements Callable<Integer> {
     return -1; // return -1 if the target is not found
   }
 	public static void main(String[] args){
-		int[] A = {4,6,2,3,7,10,11,5,20,21};
-		int result = parallelSearch(21,A,34);
-		System.out.println("Index of search: " + result);
+		int[] A = {4,6,2,3,7,10,11,5,20,21};				
+
+		//First Element
+		int search = 4;
+		int numThreads = 6;
+		result = parallelSearch(search,A,numThreads);
+		if(result != 4){
+			System.out.println("ERROR: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+		}else{
+			System.out.println("PASSED: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+		}
+		
+		//Last Element
+		search = 21;
+numThreads = 6;
+
+		result = parallelSearch(search,A,numThreads);
+		if(result != 9){
+			System.out.println("ERROR: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+		}else{
+			System.out.println("PASSED: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+		}
+			//Random Array Size
+		//Randomly pick array elements
+		//Pick element to search for
+			//Pick from array or outside from array
+		//Pick number of threads
+
 	}
 
 }
