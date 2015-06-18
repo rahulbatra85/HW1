@@ -1,6 +1,7 @@
 import java.util.concurrent.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PSearch implements Callable<Integer> {
   // TODO: Declare variables 
@@ -92,28 +93,88 @@ public class PSearch implements Callable<Integer> {
 		//First Element
 		int search = 4;
 		int numThreads = 6;
-		result = parallelSearch(search,A,numThreads);
-		if(result != 4){
-			System.out.println("ERROR: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+		int result = parallelSearch(search,A,numThreads);
+		if(result != 0){
+			System.out.println("ERROR: Test=First Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+				System.exit(-1);
 		}else{
-			System.out.println("PASSED: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+			System.out.println("PASSED: Test=First Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+		}
+	
+		//Second Element
+		search = 6;
+		numThreads = 6;
+		result = parallelSearch(search,A,numThreads);
+		if(result != 1){
+			System.out.println("ERROR: Test=Second Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+				System.exit(-1);
+		}else{
+			System.out.println("PASSED: Test=Second Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+		}
+	
+		//Middle Element
+		search = 10;
+		numThreads = 3;
+		result = parallelSearch(search,A,numThreads);
+		if(result != 5){
+			System.out.println("ERROR: Test=Middle Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+				System.exit(-1);
+		}else{
+			System.out.println("PASSED: Test=Middle Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
 		}
 		
+	
 		//Last Element
 		search = 21;
                 numThreads = 6;
 
 		result = parallelSearch(search,A,numThreads);
 		if(result != 9){
-			System.out.println("ERROR: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+			System.out.println("ERROR: Test=Last Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
+				System.exit(-1);
 		}else{
-			System.out.println("PASSED: Test=Last Element, Search="+search+ Array="+ A.toString() +",resultIdx=" + result);
+			System.out.println("PASSED: Test=Last Element, Search="+search+ "Array="+ A.toString() +",resultIdx=" + result);
 		}
+
+		Random rand = new Random();
+	
+		for(int i=0; i<10000; i++){	
 			//Random Array Size
-		//Randomly pick array elements
-		//Pick element to search for
-			//Pick from array or outside from array
-		//Pick number of threads
+			int size = rand.nextInt(100000) + 1;
+			int[] rA = new int[size];
+			//Randomly pick array elements
+			for(int n=0; n<size; n++){
+				rA[n] = rand.nextInt(1000000) + 1;
+			}
+
+			//Randomly Pick element to search for or pick one that's not in the array
+			int idx = rand.nextInt(size) + 1;
+			idx--;
+			if(rand.nextInt(10) + 1 > 1){
+				search = rA[idx];
+				for(int n=0; n<size; n++){
+					if(rA[n] == search){
+						idx = n;
+						n = size;
+					}
+				}
+			} else{
+				search = rand.nextInt(1000000) + 1000000;
+				idx = -1;
+			}
+
+			//Pick number of threads
+			numThreads = rand.nextInt(20) + 1;
+			System.out.println("INFO: Test=Random Element " + i + ", ArraySize="+size+" idx="+idx+ " search="+search+ " numThreads="+numThreads);
+
+			result = parallelSearch(search,rA,numThreads);
+			if(result != idx){
+				System.out.println("ERROR: Test=Random Element, Search="+search+ " Array="+ rA.toString() +" resultIdx=" + result);
+				System.exit(-1);
+			}else{
+				System.out.println("PASSED: Test=Random Element, Search="+search+ "Array="+ rA.toString() +" resultIdx=" + result);
+			}
+		}
 
 	}
 
