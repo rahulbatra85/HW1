@@ -47,7 +47,7 @@ public class PSearch implements Callable<Integer> {
 		    size = 1;
 		    last = 1;
 	    } 
-        else {
+            else {
 		    numP = n;
 		    size = (A.length/n); 
 		    last = size + (A.length%n);            
@@ -76,15 +76,16 @@ public class PSearch implements Callable<Integer> {
 			    }
 		    }
 	    } 
-        catch (InterruptedException e) {
+            catch (InterruptedException e) {
         	e.printStackTrace();
 	    } 
-        catch (ExecutionException e) {
+            catch (ExecutionException e) {
         	e.printStackTrace();
-	}
-    tp.shutdown();
-    return -1; // return -1 if the target is not found
-  }
+	    }
+            tp.shutdown();
+            return -1; // return -1 if the target is not found
+    }
+
 	public static void main(String[] args){
 		int[] A = {4,6,2,3,7,10,11,5,20,21};				
 
@@ -100,7 +101,7 @@ public class PSearch implements Callable<Integer> {
 		
 		//Last Element
 		search = 21;
-numThreads = 6;
+                numThreads = 6;
 
 		result = parallelSearch(search,A,numThreads);
 		if(result != 9){
